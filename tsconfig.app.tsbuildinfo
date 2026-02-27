@@ -1,0 +1,1 @@
+{"root":["./src/app.tsx","./src/main.tsx","./src/types.ts","./src/vite-env.d.ts","./src/components/backcard.tsx","./src/components/card.tsx","./src/components/hand.tsx","./src/components/processpile.tsx","./src/components/startmenu.tsx","./src/store/gamestore.ts","./src/utils/aiplayer.ts","./src/utils/gamelogic.ts"],"version":"5.9.3"}
