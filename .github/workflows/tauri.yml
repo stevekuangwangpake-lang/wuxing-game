@@ -1,0 +1,41 @@
+name: Build Tauri App
+
+on:
+  push:
+    branches:
+      - main # 当你推送到 main 分支时触发
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        # 同时启动两个任务：一个在 Mac 环境，一个在 Windows 环境
+        platform: [macos-latest, windows-latest]
+    
+    runs-on: ${{ matrix.platform }}
+    
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          
+      - name: Install Rust
+        uses: dtolnay/rust-toolchain@stable
+        
+      - name: Install dependencies
+        run: npm install
+        
+      - name: Build Tauri
+        uses: tauri-apps/tauri-action@v0
+        with:
+          tagName: v__VERSION__
+          releaseName: 'App v__VERSION__'
+          releaseBody: '由 GitHub Actions 自动构建'
+          releaseDraft: true # 打包完成后存为草稿，方便你查看
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
